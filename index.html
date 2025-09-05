@@ -1,398 +1,193 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Boxes Deliciosos - Menú</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #ff6b6b, #ffa500, #ff4757);
-            padding: 20px;
-            min-height: 100vh;
-        }
-        
-        .flyer {
-            max-width: 800px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 25px;
-            overflow: hidden;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            position: relative;
-        }
-        
-        .header {
-            background: linear-gradient(135deg, #2d3436, #636e72);
-            color: white;
-            text-align: center;
-            padding: 30px 20px;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-            animation: sparkle 3s ease-in-out infinite;
-        }
-        
-        @keyframes sparkle {
-            0%, 100% { transform: rotate(0deg) scale(1); }
-            50% { transform: rotate(180deg) scale(1.1); }
-        }
-        
-        .header h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-            position: relative;
-            z-index: 1;
-        }
-        
-        .emoji {
-            font-size: 1.5em;
-            margin: 0 5px;
-        }
-        
-        .delivery-info {
-            background: linear-gradient(45deg, #00b894, #00cec9);
-            color: white;
-            padding: 20px;
-            text-align: center;
-            font-size: 1.2em;
-            font-weight: bold;
-            margin: 0;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
-        }
-        
-        .content {
-            padding: 30px;
-            background: linear-gradient(to bottom, #f8f9fa, #e9ecef);
-        }
-        
-        .section {
-            margin-bottom: 35px;
-            background: white;
-            padding: 25px;
-            border-radius: 20px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-            border: 3px solid #ddd;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        
-        .section:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
-        }
-        
-        .section-title {
-            font-size: 1.8em;
-            color: #2d3436;
-            margin-bottom: 20px;
-            text-align: center;
-            font-weight: bold;
-            border-bottom: 3px solid #ff6b6b;
-            padding-bottom: 10px;
-        }
-        
-        .sabores {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-bottom: 20px;
-        }
-        
-        .sabor-category {
-            background: linear-gradient(135deg, #74b9ff, #0984e3);
-            color: white;
-            padding: 15px;
-            border-radius: 15px;
-            text-align: center;
-        }
-        
-        .sabor-category h4 {
-            font-size: 1.2em;
-            margin-bottom: 10px;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
-        }
-        
-        .sabor-list {
-            font-size: 0.95em;
-            line-height: 1.4;
-        }
-        
-        .box-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            padding: 20px;
-            margin-bottom: 15px;
-            background: linear-gradient(135deg, #fff, #f1f2f6);
-            border-left: 5px solid #ff6b6b;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
-        }
-        
-        .box-item:hover {
-            background: linear-gradient(135deg, #f1f2f6, #e1e5e9);
-            border-left-color: #ff4757;
-        }
-        
-        .box-info {
-            flex: 1;
-        }
-        
-        .box-name {
-            font-size: 1.3em;
-            font-weight: bold;
-            color: #2d3436;
-            margin-bottom: 8px;
-        }
-        
-        .box-contents {
-            color: #636e72;
-            line-height: 1.5;
-            font-size: 0.95em;
-        }
-        
-        .box-price {
-            font-size: 1.4em;
-            font-weight: bold;
-            color: #00b894;
-            background: linear-gradient(135deg, #dff9fb, #b2f5ea);
-            padding: 10px 15px;
-            border-radius: 25px;
-            text-align: center;
-            min-width: 120px;
-            margin-left: 20px;
-            box-shadow: 0 3px 10px rgba(0,184,148,0.2);
-        }
-        
-        .especiales .box-item {
-            border-left-color: #fdcb6e;
-            background: linear-gradient(135deg, #fff9e6, #ffeaa7);
-        }
-        
-        .especiales .box-item:hover {
-            background: linear-gradient(135deg, #ffeaa7, #fdcb6e);
-        }
-        
-        .bebidas-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-        }
-        
-        .bebida-item {
-            background: linear-gradient(135deg, #a29bfe, #6c5ce7);
-            color: white;
-            padding: 15px;
-            border-radius: 15px;
-            text-align: center;
-            font-weight: bold;
-            box-shadow: 0 5px 15px rgba(108,92,231,0.3);
-            transition: transform 0.3s ease;
-        }
-        
-        .bebida-item:hover {
-            transform: scale(1.05);
-        }
-        
-        .footer {
-            background: linear-gradient(135deg, #2d3436, #636e72);
-            color: white;
-            text-align: center;
-            padding: 20px;
-            font-size: 1.1em;
-        }
-        
-        .star {
-            color: #daa520;
-            font-size: 1.2em;
-        }
-        
-        @media (max-width: 768px) {
-            .header h1 {
-                font-size: 2em;
-            }
-            
-            .section {
-                padding: 20px;
-            }
-            
-            .box-item {
-                flex-direction: column;
-                text-align: center;
-            }
-            
-            .box-price {
-                margin: 15px 0 0 0;
-                align-self: center;
-            }
-            
-            .sabores {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GoFry’s — Menú de Boxes</title>
+  <meta name="description" content="GoFry’s: Boxes de deditos y empanadas con salsas brutales. Domicilios en Barranquilla y Soledad." />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --brand:#e8ecf0; --brand-2:#6e8694; --amber:#ac997d;
+      --aqua:#00CEC9; --violet:#6C5CE7; --ok:#0FB97D; --warn:#FDCB6E;
+      --ink:#362e2d; --muted:#5B6770; --soft:#F7F8FA; --line:#EAECEF; --paper:#FFFFFF;
+      --wa:#25D366;
+      --radius:20px;
+      --shadow:0 14px 40px rgba(0,0,0,.12);
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      font-family:'Poppins', sans-serif;
+      background:#fff;
+      background-attachment: fixed;
+      padding: 20px;
+      color: var(--ink);
+    }
+
+    .flyer{
+      max-width: 1200px; margin: 0 auto; background: var(--paper);
+      border-radius: var(--radius); box-shadow: var(--shadow); overflow:hidden;
+    }
+
+    header{
+      text-align:center; padding: 30px 20px;
+      color:#852f2f;
+      background: linear-gradient(135deg, #fff1b3, #ffdc9b);
+    }
+    header h1{font-size:2.2rem; font-weight:800; margin-bottom:6px}
+    header p{opacity:.9}
+
+    .delivery{
+      background: linear-gradient(45deg, #232b41, #232b41);
+      color:#ffffff; text-align:center; padding:16px; font-weight:600;
+    }
+
+    main{padding: 28px; background: linear-gradient(#fafbfd,#eef2f5)}
+    .section{
+      background: var(--paper); border:1px solid var(--line);
+      border-radius: var(--radius); padding:22px; margin-bottom:24px;
+      box-shadow:0 8px 24px rgba(0,0,0,.06);
+    }
+    .section h2{
+      text-align:center; font-weight:800; margin-bottom:18px;
+      border-bottom:3px solid var(--brand); padding-bottom:10px;
+      font-size:1.5rem;
+    }
+
+    .grid{display:grid; gap:16px; grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+    .pill{
+      background: #ffdc9b;
+      color:#852f2f; padding:14px; border-radius:14px; text-align:center;
+      box-shadow:0 6px 16px rgba(108,92,231,.25);
+    }
+
+    .boxes{display:grid; gap:14px}
+    .box{
+      display:flex; justify-content:space-between; gap:16px; align-items:flex-start;
+      background: linear-gradient(135deg,#fff,#f8f9fa);
+      border-left:6px solid var(--brand); padding:16px;
+      border-radius:14px; box-shadow:0 6px 16px rgba(0,0,0,.08);
+    }
+    .box h3{margin-bottom:6px;font-size:1.1rem}
+    .box .desc{color:var(--muted);font-size:.95rem}
+    .price{
+      background:linear-gradient(135deg,#e3fff6,#b7ffea);
+      color:var(--ok); font-weight:800;
+      padding:10px 14px; border-radius:999px; align-self:center;
+      min-width:110px; text-align:center;
+    }
+
+    .especial .box{border-left-color:var(--warn);background:linear-gradient(135deg,#fff9e6,#ffeaa7)}
+    .especial .price{color:#e67e22;background:linear-gradient(135deg,#fff,#fbeee6)}
+
+    .cta{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:12px}
+    .btn{
+      appearance:none;border:none;cursor:pointer;
+      padding:12px 18px;border-radius:12px;font-weight:700;
+      color:#fff;background:var(--ink);
+      box-shadow:0 6px 16px rgba(0,0,0,.2);transition:.2s;
+      text-decoration:none;
+    }
+    .btn:hover{transform:translateY(-2px);opacity:.9}
+    .btn.wa{background:var(--wa)}
+    .btn.secondary{background: #fc0000}
+
+    footer{
+      background:linear-gradient(135deg,#2D3436,#636E72);
+      color:#fff;text-align:center;padding:18px;font-weight:600
+    }
+
+    @media(max-width:720px){
+      .box{flex-direction:column;text-align:center}
+      .price{margin-top:6px}
+    }
+  </style>
 </head>
 <body>
-    <div class="flyer">
-        <div class="header">
-            <h1><span class="emoji">🥟</span> BOXES DELICIOSOS <span class="emoji">🥟</span></h1>
-            <p style="position: relative; z-index: 1;">Los mejores sabores en cada bocado</p>
-        </div>
-        
-        <div class="delivery-info">
-            <span class="emoji">📍</span> <strong>DOMICILIO</strong> - Barranquilla $4.000 | Soledad $6.000 <span class="emoji">🚴</span>
-        </div>
-        
-        <div class="content">
-            <div class="section">
-                <h2 class="section-title"><span class="emoji">🍴</span> Sabores Disponibles</h2>
-                <div class="sabores">
-                    <div class="sabor-category">
-                        <h4>🧀 DEDITOS</h4>
-                        <div class="sabor-list">
-                            Queso • Salchiqueso<br>
-                            Combinado • Bocadillo<br>
-                            Mozarella
-                        </div>
-                    </div>
-                    <div class="sabor-category">
-                        <h4>🥟 EMPANADAS</h4>
-                        <div class="sabor-list">
-                            Mozarella • Hawaiana<br>
-                            Jamón & Queso • Espinaca<br>
-                            Pollo • Ranchera
-                        </div>
-                    </div>
-                    <div class="sabor-category">
-                        <h4>🍯 SALSAS</h4>
-                        <div class="sabor-list">
-                            BBQ Miel Mostaza • Miel Mostaza<br>
-                            Rosada • Tártara de la Casa<br>
-                            Pico e' Gallo Picante
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="section">
-                <h2 class="section-title"><span class="emoji">📦</span> Nuestros Boxes</h2>
-                
-                <div class="box-item">
-                    <div class="box-info">
-                        <div class="box-name">Box Personal</div>
-                        <div class="box-contents">4 deditos • 4 empanadas • 1 salsa</div>
-                    </div>
-                    <div class="box-price">$15.000</div>
-                </div>
-                
-                <div class="box-item">
-                    <div class="box-info">
-                        <div class="box-name">Box para Dos</div>
-                        <div class="box-contents">10 deditos • 6 empanadas • 2 salsas</div>
-                    </div>
-                    <div class="box-price">$25.000</div>
-                </div>
-                
-                <div class="box-item">
-                    <div class="box-info">
-                        <div class="box-name">Box para 4</div>
-                        <div class="box-contents">16 deditos • 16 empanadas • 2 salsas</div>
-                    </div>
-                    <div class="box-price">$55.000</div>
-                </div>
-                
-                <div class="box-item">
-                    <div class="box-info">
-                        <div class="box-name">Box Para Compartir</div>
-                        <div class="box-contents">30 deditos • 20 empanadas • 4 salsas</div>
-                    </div>
-                    <div class="box-price">$72.000</div>
-                </div>
-                
-                <div class="box-item">
-                    <div class="box-info">
-                        <div class="box-name">MiniBox Para Compartir</div>
-                        <div class="box-contents">30 deditos • 20 empanadas • 4 salsas</div>
-                    </div>
-                    <div class="box-price">$48.000</div>
-                </div>
-                
-                <div class="box-item">
-                    <div class="box-info">
-                        <div class="box-name">Box de 10 a 20 personas</div>
-                        <div class="box-contents">40 deditos • 40 empanadas • 20 medallones (Salchicha Ranchera) • 4 salsas</div>
-                    </div>
-                    <div class="box-price">$144.000</div>
-                </div>
-                
-                <div class="box-item">
-                    <div class="box-info">
-                        <div class="box-name">MiniBox de 10 a 20 personas</div>
-                        <div class="box-contents">40 deditos • 40 empanadas • 20 medallones (Salchicha Ranchera) • 4 salsas</div>
-                    </div>
-                    <div class="box-price">$96.000</div>
-                </div>
-            </div>
-            
-            <div class="section especiales">
-                <h2 class="section-title"><span class="emoji">🔥</span> Especiales <span class="star">⭐</span></h2>
-                
-                <div class="box-item">
-                    <div class="box-info">
-                        <div class="box-name"><span class="star">🌟</span> Box Dedilocos (Personal)</div>
-                        <div class="box-contents">10 deditos • 1 salsa</div>
-                    </div>
-                    <div class="box-price">$15.000</div>
-                </div>
-                
-                <div class="box-item">
-                    <div class="box-info">
-                        <div class="box-name"><span class="star">🌟</span> Box Empanadas (Personal)</div>
-                        <div class="box-contents">10 empanadas • 1 salsa</div>
-                    </div>
-                    <div class="box-price">$25.000</div>
-                </div>
-            </div>
-            
-            <div class="section">
-                <h2 class="section-title"><span class="emoji">🥤</span> Bebidas</h2>
-                <div class="bebidas-grid">
-                    <div class="bebida-item">
-                        CocaCola 300ml<br>
-                        <strong>$2.000</strong>
-                    </div>
-                    <div class="bebida-item">
-                        CocaCola 500ml<br>
-                        <strong>$5.000</strong>
-                    </div>
-                    <div class="bebida-item">
-                        CocaCola 1.5L<br>
-                        <strong>$10.000</strong>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="footer">
-            <span class="emoji">🍽️</span> ¡Pedí ya y disfrutá de los mejores sabores! <span class="emoji">🍽️</span>
-        </div>
+  <div class="flyer">
+    <header>
+      <h1>GoFry’s — Menú de Boxes</h1>
+      <p>“Muerde, ríe y repite” — Los mejores sabores en cada bocado</p>
+    </header>
+
+    <div class="delivery">
+      📍 DOMICILIO — Barranquilla $5.000 | Soledad $10.000 🚴
     </div>
+
+    <main>
+      <!-- Sabores -->
+      <section class="section">
+        <h2>🍴 Sabores Disponibles</h2>
+        <div class="grid">
+          <div class="pill"><h4>🧀 Deditos</h4><p>Queso • Salchiqueso • Combinado • Bocadillo • Mozarella</p></div>
+          <div class="pill"><h4>🥟 Empanadas</h4><p>Mozarella • Hawaiana • Jamón & Queso • Espinaca • Pollo • Ranchera</p></div>
+          <div class="pill"><h4>🍯 Salsas</h4><p>BBQ Miel Mostaza • Miel Mostaza • Rosada • Tártara de la Casa • Pico e’ Gallo picante</p></div>
+        </div>
+      </section>
+
+      <!-- Boxes -->
+      <section class="section">
+        <h2>📦 Nuestros Boxes</h2>
+        <div class="boxes">
+          <article class="box"><div><h3>Box Personal</h3><p class="desc">4 deditos • 4 empanadas • 1 salsa</p></div><div class="price">$15.000</div></article>
+          <article class="box"><div><h3>Box para Dos</h3><p class="desc">10 deditos • 6 empanadas • 2 salsas</p></div><div class="price">$25.000</div></article>
+          <article class="box"><div><h3>Box para 4</h3><p class="desc">16 deditos • 16 empanadas • 2 salsas</p></div><div class="price">$55.000</div></article>
+          <article class="box"><div><h3>Box Para Compartir</h3><p class="desc">30 deditos • 20 empanadas • 4 salsas</p></div><div class="price">$72.000</div></article>
+          <article class="box"><div><h3>MiniBox Para Compartir</h3><p class="desc">30 deditos • 20 empanadas • 4 salsas</p></div><div class="price">$48.000</div></article>
+          <article class="box"><div><h3>Box de 10 a 20 personas</h3><p class="desc">40 deditos • 40 empanadas • 20 medallones (Salchicha Ranchera) • 4 salsas</p></div><div class="price">$144.000</div></article>
+          <article class="box"><div><h3>MiniBox de 10 a 20 personas</h3><p class="desc">40 deditos • 40 empanadas • 20 medallones (Salchicha Ranchera) • 4 salsas</p></div><div class="price">$96.000</div></article>
+          <article class="box"><div><h3>TuBox Empresarial</h3><p class="desc">Arma con nosotros tu pedido segun la necesidad de tu evento</p></div><div class="price">Personalizado</div></article>
+        </div>
+      </section>
+
+      <!-- Especiales -->
+      <section class="section especial">
+        <h2>🔥 Especiales</h2>
+        <div class="boxes">
+          <article class="box"><div><h3>🌟 Box Dedilocos (Personal)</h3><p class="desc">10 deditos • 1 salsa</p></div><div class="price">$15.000</div></article>
+          <article class="box"><div><h3>🌟 Box Empanadas (Personal)</h3><p class="desc">10 empanadas • 1 salsa</p></div><div class="price">$25.000</div></article>
+        </div>
+      </section>
+
+      <!-- Bebidas -->
+      <section class="section">
+        <h2>🥤 Bebidas</h2>
+        <div class="grid">
+          <div class="pill">CocaCola 250ml<br><strong>$2.000</strong></div>
+          <div class="pill">CocaCola 600ml<br><strong>$5.000</strong></div>
+          <div class="pill">CocaCola 1.5L<br><strong>$7.000</strong></div>
+        </div>
+      </section>
+
+      <!-- CTA -->
+      <section class="section">
+        <h2>🛵 Pide Ya</h2>
+        <div class="cta">
+          <a class="btn wa" href="https://wa.me/573332618905?text=Hola%20GoFry%E2%80%99s!%20Quiero%20hacer%20un%20pedido%20🥟" target="_blank">Pedir por WhatsApp</a>
+          <button class="btn secondary" id="copyDaviplata">Copiar Daviplata</button>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      🍽️ ¡Pedí ya y disfrutá de los mejores sabores! 🍽️
+    </footer>
+  </div>
+
+  <script>
+    const DAVIPLATA = "3045213123";
+    document.getElementById('copyDaviplata').addEventListener('click', async () => {
+      const txt = `Daviplata: ${DAVIPLATA}`;
+      try{
+        await navigator.clipboard.writeText(txt);
+        const btn = document.getElementById('copyDaviplata');
+        const old = btn.textContent;
+        btn.textContent = "¡Copiado! ✅";
+        setTimeout(()=> btn.textContent = old, 1600);
+      }catch(e){ alert(txt); }
+    });
+  </script>
 </body>
 </html>
